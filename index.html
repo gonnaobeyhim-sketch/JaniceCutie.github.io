@@ -7,26 +7,55 @@
     <link rel="stylesheet" href="css/valentine.css" />
   </head>
   <body>
-    <div id="valentineQuestion"><b>Will you be my valentine?</b></div>
-    <button class="answerButton" onclick="location.href='thankyou.html'">
-      Yes
-    </button>
+    <div id="valentineQuestion"><b>I know this is late... But will you be my valentine?</b></div>
+    <button
+  class="answerButton"
+  id="yesButton"
+  onclick="location.href='thankyou.html'"
+>
+  Yes
+</button>
     <button class="answerButton" id="noButton">I no no wanna o(╥﹏╥)o</button>
     <br />
     <img src="cat.gif" alt="cat asking question" class="responsive" />
 
-    <script>
-      document
-        .getElementById("noButton")
-        .addEventListener("click", function () {
-          var yesButton = document.querySelector(
-            'button[onclick*="thankyou.html"]'
-          );
-          var currentFontSize = parseInt(
-            window.getComputedStyle(yesButton).fontSize
-          );
-          yesButton.style.fontSize = currentFontSize + 10 + "px"; // Increase font size by 5px
-        });
-    </script>
+   <script>
+  const noButton = document.getElementById("noButton");
+  const yesButton = document.getElementById("yesButton");
+
+  // --- NO BUTTON BEHAVIOR ---
+  noButton.style.position = "absolute";
+
+  function moveButtonRandomly() {
+    const maxX = window.innerWidth - noButton.offsetWidth;
+    const maxY = window.innerHeight - noButton.offsetHeight;
+
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
+
+    noButton.style.left = randomX + "px";
+    noButton.style.top = randomY + "px";
+  }
+
+  // Constant floating (adjust speed here)
+  setInterval(moveButtonRandomly, 500);
+
+  // Teleport on click
+  noButton.addEventListener("click", function () {
+    noButton.style.display = "none";
+    setTimeout(() => {
+      moveButtonRandomly();
+      noButton.style.display = "block";
+    }, 50);
+  });
+
+  // --- YES BUTTON GROWTH ---
+  let yesScale = 1;
+
+  setInterval(() => {
+    yesScale += 0.15; // growth rate
+    yesButton.style.transform = `scale(${yesScale})`;
+  }, 1000); // grows every 2 seconds
+</script>
   </body>
 </html>
